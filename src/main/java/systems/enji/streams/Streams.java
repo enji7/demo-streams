@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Spliterator;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -60,6 +61,7 @@ public class Streams {
     // infinite streams:
     //		Stream<String> s = Stream.iterate("a", e -> e + "a");
     //		Stream<String> s = Stream.generate(() -> UUID.randomUUID().toString());
+    //    List<Boolean> infiniteRandomBooleans = infiniteRandomBooleans();
 
     return s;
 
@@ -160,6 +162,19 @@ public class Streams {
     // reduction with an additional combiner / aggregator; TODO: difference to previous method unknown
     //		System.out.println(s.reduce("START", (a, b) -> a + "," + b, (a, b) -> a + "|" + b));
 
+  }
+
+  /**
+   * Generates an infinite list of random booleans.
+   */
+  private static List<Boolean> infiniteRandomBooleans() {
+    var randomBooleans = Stream.
+        // to improve performance, you can also create the Random once before:
+        generate(() -> new Random().nextBoolean())
+        // comment out the following to get a limited list:
+        .limit(10)
+        .collect(Collectors.toList());
+    return randomBooleans;
   }
 
 }
