@@ -165,13 +165,14 @@ public class Streams {
   }
 
   /**
-   * Generates an infinite list of random booleans.
+   * Generates a (potentially) infinite list of random booleans.
    */
   private static List<Boolean> infiniteRandomBooleans() {
     var randomBooleans = Stream.
         // to improve performance, you can also create the Random once before:
         generate(() -> new Random().nextBoolean())
-        // comment out the following to get a limited list:
+        // without the following limit, you would get an unlimited stream;
+        // however, turning an unlimited stream into a list would take forever...
         .limit(10)
         .collect(Collectors.toList());
     return randomBooleans;
